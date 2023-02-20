@@ -42,7 +42,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest]
-        python-version: ["2.7", "3.5", "3.6", "3.7", "3.8", "3.9", "3.10"]
+        python-version: ["2.7", "3.5", "3.6", "3.7", "3.8", "3.9", "3.10", "3.11"]
     steps:
       - name: Set up dependencies
         run: |
@@ -113,7 +113,7 @@ jobs:
           then
             PYTEST_ARGS=( '-c' './setup-py2.7.cfg' )
           fi
-          if [[ "${{ matrix.python-version }}" =~ "3.10" ]] && [ "$RUNNER_OS" == "Linux" ]
+          if [[ "${{ matrix.python-version }}" =~ "3.11" ]] && [ "$RUNNER_OS" == "Linux" ]
           then
             wget https://raw.githubusercontent.com/python/cpython/main/Misc/valgrind-python.supp
             VALGRIND=(
@@ -136,7 +136,7 @@ jobs:
             test-outputs_*.log
       - name: Upload valgrind report
         uses: actions/upload-artifact@v2
-        if: ${{ matrix.python-version == '3.10' && matrix.os == 'ubuntu-latest' }}
+        if: ${{ matrix.python-version == '3.11' && matrix.os == 'ubuntu-latest' }}
         with:
           name: valgrind-report
           path: ./valgrind.out
